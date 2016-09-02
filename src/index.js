@@ -23,9 +23,9 @@ class App extends React.Component {
 		return (<div className="mainBody">	
 		<h1>hi i am leo</h1>
 		<ul>
-			<li><ActiveLink to="/home/ 123">home</ActiveLink></li>
+			<li><ActiveLink to="/home">home</ActiveLink></li>
 			<li><ActiveLink to="/about">about</ActiveLink></li>
-		<li><ActiveLink to="/curse">curse</ActiveLink></li>
+		    <li><ActiveLink to="/curse">curse</ActiveLink></li>
 			<li><ActiveLink to="/ncurse">ncurse</ActiveLink></li>
 		</ul>
 		{this.props.children}
@@ -38,7 +38,9 @@ ReactDOM.render(<div className={Style.wrap}>
 	<Header></Header>
 	<Router history={hashHistory}>
 	  <Route path='/' component={App}>
-	   <Route path='home/:id' component={Home} onLeave={(e)=>{console.log(this)}}></Route>
+	   <Route path='home' component={Home} >
+	      <Route path=':id' component={Curse}></Route>
+	   </Route>
 	   <Route path='about' component={About}></Route>
 	   <Route path='/abouts' components={{main:Home,sidebar:About}}></Route>
 	   <Redirect from="haha" to="/abouts"></Redirect>
