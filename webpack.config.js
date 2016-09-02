@@ -10,7 +10,7 @@ module.exports = {
   output: {
     path: BUILD_PATH,
     filename: 'main.js',
-    publicPath: ROOT_PATH
+    publicPath: '/dist/'
   },
   module: {
     loaders: [{
@@ -39,5 +39,21 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
-  }
+  },
+  plugins: [
+
+    new webpack.optimize.CommonsChunkPlugin("commons.js"), /*提取公共部分*/
+    new webpack.optimize.UglifyJsPlugin({ /*代码压缩*/
+      compress: {
+        warnings: false
+      }
+    })
+
+
+  ],
+  /*  devServer: {
+      port: 9000,
+      contentBase: './dist',
+      historyApiFallback: true,
+    }*/
 }
