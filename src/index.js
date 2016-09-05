@@ -9,11 +9,18 @@ import {
 } from 'react-router'
 import Header from './component/header'
 import Home from './component/home'
-import About from './component/about'
 import Curse from './component/curse'
+import About from './component/about'
 import Style from './style/main.css'
+import Main from './component/main'
+import Sidebar from './component/sidebar'
+import Asys from './component/asys'
+// import Asy from './component/Asynchronous.js'
 const ActiveLink = function(props) {
 	return (<Link activeStyle={{color:"red"}} active {...props}></Link>)
+}
+var Mdzz = function() {
+	return (<div>mdzz</div>)
 }
 class App extends React.Component {
 	componentWillMount() {
@@ -25,8 +32,8 @@ class App extends React.Component {
 		<ul>
 			<li><ActiveLink to="/home">home</ActiveLink></li>
 			<li><ActiveLink to="/about">about</ActiveLink></li>
-		    <li><ActiveLink to="/curse">curse</ActiveLink></li>
-			<li><ActiveLink to="/ncurse">ncurse</ActiveLink></li>
+		    <li><ActiveLink to="/asy">asy</ActiveLink></li>
+		    <li><ActiveLink to="/asys">asys</ActiveLink></li>
 		</ul>
 		{this.props.children}
 		{this.props.sidebar}
@@ -35,18 +42,15 @@ class App extends React.Component {
 	}
 }
 ReactDOM.render(<div className={Style.wrap}>
-	<Header></Header>
+	<Header />
 	<Router history={hashHistory}>
 	  <Route path='/' component={App}>
-	   <Route path='home' component={Home} >
-	      <Route path=':id' component={Curse}></Route>
-	   </Route>
-	   <Route path='about' component={About}></Route>
-	   <Route path='/abouts' components={{main:Home,sidebar:About}}></Route>
-	   <Redirect from="haha" to="/abouts"></Redirect>
-	   <Route path='curse'getComponent={(location,cb)=>{cb(null,Curse)}}></Route> 
-	   <Route path='ncurse' getComponent={(location,cb)=>{cb(null,{sidebar:Curse,main:About})}}></Route>
-	   <Route path='/tiaozhuan' onEnter={(e)=>{}}></Route>
+		   <Route path='home' component={Home} >
+		      <Route path=':id' component={Curse} />
+		   </Route>
+		   <Route path='about' components={{main:Main,sidebar:Sidebar}} onEnter={()=>alert("in")} onLeave={()=>alert("out")} />
+		   <Route path='/asy' getComponent={(nextState,cb)=>require.ensure([],(require)=>cb(null,Asys))} />
+		   <Route path='/asys' getComponents={(nextState,cb)=>require.ensure([],(require)=>cb(null,{ main:require('./component/asy1'),sidebar:require('./component/asy2')}))}></Route>
 	  </Route>
 	</Router>
 </div>, document.getElementById('example'))
